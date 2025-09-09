@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Node.js &amp; Docker環境でnode-cronを使用し、MySQLデータベースのSQLダンプファイルをS3にアップロードするシステム\r ## 概要\r このプログラムは、以下の処理を自動で行います。\r - スケジュール実行: node-cronを使い、毎日指定した時刻（例：深夜0時）に処理を開始します。\r - データベースバックアップ: mysqldumpコマンドをプログラム内から実行し、MySQLデータベースのSQLダンプファイルを作成します。\r - S3へアップロード: 作成したダンプファイルをAWS S3バケットにアップロードします。\r - クリーンアップ: アップロード後、ローカルに作成したダンプファイルを削除します。",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "deploy": "node dist/deploy.js",
     "start": "node dist/index.js",
     "compile": "tsc -p .",
     "lint:prettier": "prettier --check src",
