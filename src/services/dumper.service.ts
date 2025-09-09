@@ -2,6 +2,7 @@ import { exec } from "child_process";
 import path from "path";
 import fs from "fs";
 import { config } from "../config.js";
+import { fileURLToPath } from "url";
 
 /**
  * データベースのダンプをするクラス
@@ -9,8 +10,11 @@ import { config } from "../config.js";
 export class MySqlDumper {
 	public async dump(): Promise<string> {
 		const { host, user, password, name } = config.db;
-		const tmpDir = path.join(__dirname, "..", "..", "tmp");
-		if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir); // tmpディレクトリ作成
+		const __filename = fileURLToPath(import.meta.url);
+        const __dirname = path.dirname(__filename);
+        
+        const tmpDir = path.join(__dirname, '..', '..', 'tmp');
+        if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir);
 
 		const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 		const fileName = `backup-${timestamp}.sql`;
