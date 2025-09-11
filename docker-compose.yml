@@ -1,0 +1,13 @@
+services:
+  backup-service:
+    build: .
+    container_name: backup_service
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - default_network
+networks:
+  default_network:
+    external: true
+    name: ${DOCKER_NETWORK_NAME}
