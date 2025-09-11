@@ -8,9 +8,9 @@ import { fileURLToPath } from "url";
  * データベースのダンプをするクラス
  */
 export class MySqlDumper {
-    public async dump(): Promise<string> {
-        const { host, user, password, name } = config.db;
-        const __filename = fileURLToPath(import.meta.url);
+	public async dump(): Promise<string> {
+		const { host, user, password, name } = config.db;
+		const __filename = fileURLToPath(import.meta.url);
         const __dirname = path.dirname(__filename);
         
         const tmpDir = path.join(__dirname, '..', '..', 'tmp');
