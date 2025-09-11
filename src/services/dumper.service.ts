@@ -19,7 +19,7 @@ export class MySqlDumper {
 		const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
 		const fileName = `backup-${timestamp}.sql`;
 		const filePath = path.join(tmpDir, fileName);
-		const dumpCommand = `mysqldump -h ${host} -u ${user} -p"${password}" ${name} > ${filePath}`;
+		const dumpCommand = `mysqldump -h ${host} -u ${user} -p"${password}" ${name} --ssl=0 > ${filePath}`;
 
 		return new Promise((resolve, reject) => {
 			exec(dumpCommand, (error) => {
