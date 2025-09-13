@@ -23,7 +23,7 @@ export class BackupService {
 			console.error("バックアップ処理中にエラーが発生しました:", error);
 		} finally {
 			if (dumpFilePath) {
-				this.uploader.cleanup(dumpFilePath);
+				await this.uploader.cleanup(dumpFilePath);
 			}
 		}
 	}
