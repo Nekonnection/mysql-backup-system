@@ -17,7 +17,7 @@ export const config = {
 		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!
 	},
 	cron: {
-		schedule: "* * * * *",
+		schedule: "0 0 * * *",
 		timezone: "Asia/Tokyo"
 	}
 };
