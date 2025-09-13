@@ -18,7 +18,10 @@ export class S3Uploader {
 			}
 		});
 	}
-
+	/**
+	 * S3にファイルをアップロードする
+	 * @param filePath アップロードするファイルのパス
+	 */
 	public async upload(filePath: string): Promise<void> {
 		const fileName = path.basename(filePath);
 		await this.s3Client.send(
@@ -28,13 +31,16 @@ export class S3Uploader {
 				Body: fs.createReadStream(filePath)
 			})
 		);
-		console.log(`✅ S3 upload successful: backups/${fileName}`);
+		console.log(`S3にファイルをアップロードしました: backups/${fileName}`);
 	}
-
-	public cleanup(filePath: string): void {
+	/**
+	 * ローカルのファイルを削除する
+	 * @param filePath 削除するファイルのパス
+	 */
+	public async cleanup(filePath: string): Promise<void> {
 		if (fs.existsSync(filePath)) {
 			fs.unlinkSync(filePath);
-			console.log(`🗑️ Local file deleted: ${filePath}`);
+			console.log(`ローカルファイルを削除しました: ${filePath}`);
 		}
 	}
 }

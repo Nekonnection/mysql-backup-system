@@ -1,22 +1,40 @@
 import cron from "node-cron";
 import { BackupService } from "./services/backup.service.js";
 import { config } from "./config.js";
-
 /**
  * バックアップのスケジューリングを管理するクラス
  */
 export class BackupScheduler {
-	constructor(private readonly backupService: BackupService) {}
+    private readonly job;
 
-	public start(): void {
-		cron.schedule(
+    constructor(private readonly backupService: BackupService) {
+		this.job = cron.schedule(
 			config.cron.schedule,
-			() => {
-				console.log(`\n[${new Date().toLocaleString("ja-JP")}] Running scheduled backup...`);
-				this.backupService.run();
-			},
-			{ timezone: config.cron.timezone }
+			() => this._runJob(),
+			{
+				timezone: config.cron.timezone,
+			}
 		);
-		console.log(`⏰ Backup scheduler started. Will run at: ${config.cron.schedule}`);
+		this.job.stop();
 	}
+    /**
+     * スケジューラを起動します。
+     */
+    public start(): void {
+        this.job.start();
+        console.log(`バックアップスケジューラを起動しました。実行スケジュール: ${config.cron.schedule}`);
+    }
+
+    /**
+     * スケジュールされたバックアップ処理を実行します。
+     */
+    private async _runJob(): Promise<void> {
+        console.log(`定期バックアップ処理を開始します...`);
+        try {
+            await this.backupService.run();
+            console.log(`バックアップ処理が正常に完了しました。`);
+        } catch (error) {
+            console.error(`バックアップ処理中にエラーが発生しました。`, error);
+        }
+    }
 }
