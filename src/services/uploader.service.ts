@@ -39,7 +39,7 @@ export class S3Uploader {
 	 */
 	public async cleanup(filePath: string): Promise<void> {
 		if (fs.existsSync(filePath)) {
-			fs.unlinkSync(filePath);
+			await fs.promises.unlink(filePath);
 			console.log(`ローカルファイルを削除しました: ${filePath}`);
 		}
 	}
