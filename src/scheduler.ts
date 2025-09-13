@@ -29,12 +29,6 @@ export class BackupScheduler {
      * スケジュールされたバックアップ処理を実行します。
      */
     private async _runJob(): Promise<void> {
-        console.log(`定期バックアップ処理を開始します...`);
-        try {
-            await this.backupService.run();
-            console.log(`バックアップ処理が正常に完了しました。`);
-        } catch (error) {
-            console.error(`バックアップ処理中にエラーが発生しました。`, error);
-        }
+        await this.backupService.run();
     }
 }
